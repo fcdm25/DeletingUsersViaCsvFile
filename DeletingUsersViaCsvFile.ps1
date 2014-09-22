@@ -1,9 +1,8 @@
 $LiveCred = Get-Credential
-$Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri httpsps.outlook.compowershell -Credential $LiveCred -Authentication Basic -AllowRedirection
+$Session = New-PSSession -ConfigurationName Microsoft.Exchange -ConnectionUri https://ps.outlook.com/powershell/ -Credential $LiveCred -Authentication Basic -AllowRedirection
 Import-PSSession $Session
- 
-Import-CSV cmail.csv  %{
-echo $_.mail
-Remove-Mailbox -Identity $_.mail -Confirm$false
- 
-}
+
+Import-CSV .\mail.csv | %{
+    echo $_."mail"
+    Remove-Mailbox -Identity $_."mail" -Confirm:$false
+    }
